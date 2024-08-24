@@ -1,4 +1,3 @@
-// server/index.js
 const express = require("express")
 const fs = require("fs")
 const cors = require("cors")
@@ -17,65 +16,98 @@ app.use(bodyParser.json())
 const dataFilePath = path.join(__dirname, "../data/items.json")
 
 function readData() {
-  const data = fs.readFileSync(dataFilePath, "utf8")
-  return JSON.parse(data)
+  try {
+    const data = fs.readFileSync(dataFilePath, "utf8")
+    return JSON.parse(data)
+  } catch (error) {
+    console.error("Error reading data:", error)
+    throw error
+  }
 }
 
 function writeData(data) {
-  fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf8")
+  try {
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf8")
+  } catch (error) {
+    console.error("Error writing data:", error)
+    throw error
+  }
 }
 
 // Get all items
 app.get("/api/items", (req, res) => {
-  const items = readData()
-  res.json(items)
+  try {
+    const items = readData()
+    res.json(items)
+  } catch (error) {
+    res.status(500).send("Error fetching items")
+  }
 })
 
 // Get item by ID
 app.get("/api/items/:id", (req, res) => {
-  const items = readData()
-  const item = items.find((item) => item.id === req.params.id)
-  if (item) {
-    res.json(item)
-  } else {
-    res.status(404).send("Item not found")
+  try {
+    const items = readData()
+    const item = items.find((item) => item.id === req.params.id)
+    if (item) {
+      res.json(item)
+    } else {
+      res.status(404).send("Item not found")
+    }
+  } catch (error) {
+    res.status(500).send("Error fetching item")
   }
 })
 
 // Create a new item
 app.post("/api/items", (req, res) => {
-  const items = readData()
-  const newItem = {
-    id: Date.now().toString(),
-    name: req.body.name,
+  try {
+    console.log("Request body:", req.body)
+    const items = readData()
+    const newItem = {
+      id: Date.now().toString(),
+      name: req.body.name,
+      status: req.body.status,
+    }
+    items.push(newItem)
+    writeData(items)
+    res.status(201).json(newItem)
+  } catch (error) {
+    res.status(500).send("Error creating item")
   }
-  items.push(newItem)
-  writeData(items)
-  res.status(201).json(newItem)
 })
 
 // Update an item
 app.put("/api/items/:id", (req, res) => {
-  const items = readData()
-  const index = items.findIndex((item) => item.id === req.params.id)
-  if (index !== -1) {
-    items[index].name = req.body.name
-    writeData(items)
-    res.json(items[index])
-  } else {
-    res.status(404).send("Item not found")
+  try {
+    const items = readData()
+    const index = items.findIndex((item) => item.id === req.params.id)
+    if (index !== -1) {
+      items[index].name = req.body.name
+      items[index].status = req.body.status
+      writeData(items)
+      res.json(items[index])
+    } else {
+      res.status(404).send("Item not found")
+    }
+  } catch (error) {
+    res.status(500).send("Error updating item")
   }
 })
 
 // Delete an item
 app.delete("/api/items/:id", (req, res) => {
-  const items = readData()
-  const newItems = items.filter((item) => item.id !== req.params.id)
-  if (items.length !== newItems.length) {
-    writeData(newItems)
-    res.status(204).send()
-  } else {
-    res.status(404).send("Item not found")
+  try {
+    const items = readData()
+    const newItems = items.filter((item) => item.id !== req.params.id)
+    if (items.length !== newItems.length) {
+      writeData(newItems)
+      res.status(204).send()
+    } else {
+      res.status(404).send("Item not found")
+    }
+  } catch (error) {
+    res.status(500).send("Error deleting item")
   }
 })
 
@@ -85,24 +117,24 @@ app.listen(PORT, () => {
 
 // Swagger setup
 const swaggerOptions = {
-    swaggerDefinition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'CRUD API',
-            version: '1.0.0',
-            description: 'CRUD API Documentation',
-        },
-        servers: [
-            {
-                url: 'http://localhost:3001',
-            },
-        ],
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "CRUD API",
+      version: "1.0.0",
+      description: "CRUD API Documentation",
     },
-    apis: ['./server/index.js'],
-};
+    servers: [
+      {
+        url: "http://localhost:3001",
+      },
+    ],
+  },
+  apis: ["./server/index.js"],
+}
 
-const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const swaggerDocs = swaggerJsdoc(swaggerOptions)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 /**
  * @swagger

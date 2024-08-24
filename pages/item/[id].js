@@ -7,27 +7,38 @@ import ItemForm from "../../components/FormComponent"
 export default function ItemPage() {
   const router = useRouter()
   const { id } = router.query
-  const [item, setItem] = useState({ name: "" })
+  const [item, setItem] = useState({ name: "", status: "IN STOCK" }) // Initialize with status
 
   useEffect(() => {
+    console.log("Current ID:", id) // Debugging line
     if (id && id !== "new") {
       fetchItem()
     }
   }, [id])
 
   const fetchItem = async () => {
-    const response = await axios.get(`http://localhost:3001/api/items`)
-    const foundItem = response.data.find((item) => item.id == id)
-    if (foundItem) setItem(foundItem)
+    try {
+      const response = await axios.get(`http://localhost:3001/api/items/${id}`) // Fetch item by ID
+      console.log("Fetched item:", response.data) // Debugging line
+      setItem(response.data)
+    } catch (error) {
+      console.error("Failed to fetch item:", error)
+    }
   }
 
   const handleSubmit = async (formData) => {
-    if (id === "new") {
-      await axios.post("http://localhost:3001/api/items", formData)
-    } else {
-      await axios.put(`http://localhost:3001/api/items/${id}`, formData)
+    try {
+      console.log("Submitting form data:", formData) // Debugging line
+      if (id === "new") {
+        await axios.post("http://localhost:3001/api/items", formData)
+      } else {
+        console.log("Sending data for update:", formData) // Debugging line
+        await axios.put(`http://localhost:3001/api/items/${id}`, formData)
+      }
+      router.push("/")
+    } catch (error) {
+      console.error("Failed to save item:", error)
     }
-    router.push("/")
   }
 
   return (

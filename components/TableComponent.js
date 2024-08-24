@@ -59,6 +59,7 @@ export default function ItemTable({ items, onDelete }) {
                   Name
                 </TableSortLabel>
               </TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -68,6 +69,7 @@ export default function ItemTable({ items, onDelete }) {
               .map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.status}</TableCell>
                   <TableCell>
                     <Link href={`/item/${item.id}`} passHref>
                       <Button variant="contained" color="primary">
