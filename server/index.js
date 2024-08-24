@@ -11,6 +11,12 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(cors())
+app.use(
+  cors({
+    origin: ["https://crud-app-nine-tan.vercel.app/"], // Replace with your Vercel URL
+    credentials: true,
+  })
+)
 app.use(bodyParser.json())
 
 const dataFilePath = path.join(__dirname, "../data/items.json")

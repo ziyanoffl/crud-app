@@ -13,6 +13,7 @@ export default function Home() {
   const [deleteId, setDeleteId] = useState(null)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState("")
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
     fetchItems()
@@ -28,7 +29,7 @@ export default function Home() {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/items")
+      const response = await axios.get(`https://crud-app-3bsz.onrender.com/api/items`)
       setItems(response.data)
     } catch (error) {
       setSnackbarMessage("Failed to fetch items.")
@@ -43,7 +44,7 @@ export default function Home() {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/items/${deleteId}`)
+      await axios.delete(`https://crud-app-3bsz.onrender.com/api/items/${deleteId}`)
       setSnackbarMessage("Item deleted successfully.")
       fetchItems()
     } catch (error) {

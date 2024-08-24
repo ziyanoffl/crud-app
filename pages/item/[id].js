@@ -18,7 +18,7 @@ export default function ItemPage() {
 
   const fetchItem = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/items/${id}`) // Fetch item by ID
+      const response = await axios.get(`https://crud-app-3bsz.onrender.com/api/items/${id}`) // Fetch item by ID
       console.log("Fetched item:", response.data) // Debugging line
       setItem(response.data)
     } catch (error) {
@@ -30,10 +30,10 @@ export default function ItemPage() {
     try {
       console.log("Submitting form data:", formData) // Debugging line
       if (id === "new") {
-        await axios.post("http://localhost:3001/api/items", formData)
+        await axios.post("https://crud-app-3bsz.onrender.com/api/items", formData)
       } else {
         console.log("Sending data for update:", formData) // Debugging line
-        await axios.put(`http://localhost:3001/api/items/${id}`, formData)
+        await axios.put(`https://crud-app-3bsz.onrender.com/api/items/${id}`, formData)
       }
       router.push("/")
     } catch (error) {
