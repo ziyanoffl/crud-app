@@ -1,40 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CRUD Application with Next.js, Node.js, and Material UI
 
-## Getting Started
+This repository contains a full-stack CRUD (Create, Read, Update, Delete) application built with Next.js for the frontend and Node.js with Express for the backend. The application allows you to manage a list of items, with features like item creation, editing, deletion, and listing.
 
-First, run the development server:
+## Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is designed to demonstrate a simple yet complete CRUD application with modern technologies. It includes a responsive UI, API integration, and deployment on cloud services.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Key Features
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Item Management**: Create, Read, Update, and Delete items.
+- **Material UI**: Utilized for responsive and consistent design across the application.
+- **Dynamic Routing**: Implemented using Next.js for a seamless user experience.
+- **API Documentation**: Integrated using Swagger for easy API exploration.
+- **Search and Filter**: Implemented for easy navigation through items.
+- **Pagination and Sorting**: Enhance the user experience by organizing the item list.
+- **Snackbar Notifications**: Visual feedback for CRUD operations.
+- **Error Handling**: Robust error handling in the backend to ensure stability.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Technologies Used
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **[Next.js](https://nextjs.org/)**: A React framework for building fast and user-friendly web applications.
+- **[Material UI](https://mui.com/)**: A popular React UI framework for building responsive and accessible user interfaces.
+- **[Axios](https://axios-http.com/)**: Used for making HTTP requests to the backend API.
 
-## Learn More
+### Backend
 
-To learn more about Next.js, take a look at the following resources:
+- **[Node.js](https://nodejs.org/)**: JavaScript runtime for building scalable network applications.
+- **[Express.js](https://expressjs.com/)**: A minimal and flexible Node.js web application framework.
+- **[Swagger](https://swagger.io/)**: Used for documenting the API.
+- **JSON**: Data storage used for simplicity, easily upgradable to a database like MongoDB.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The application is deployed on the following platforms:
 
-## Deploy on Vercel
+- **Frontend**: [Vercel Deployment Link](https://crud-app-nine-tan.vercel.app/)
+- **Backend**: [Render Deployment Link](https://crud-app-3bsz.onrender.com)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### API Documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The API is documented using Swagger. You can access the documentation at:
+
+- [Swagger UI](https://crud-app-3bsz.onrender.com/api-docs)
+
